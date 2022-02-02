@@ -56,13 +56,13 @@ export default class LineD3{
                 .attr('class', 'line')
                 .attr("fill", "none")
                 .attr("stroke", () => {
-                        if(time === 210 || time === 211 || time === 213 || time === 214 || time === 216){
+                        // if(time === 210 || time === 211 || time === 213 || time === 214 || time === 216){
+                        //         return 'steelblue'
+                        // }else if(time === 212 || time === 215 || time === 217 || time === 218 || time === 219){
+                        //         return 'green'
+                        // }else{
                                 return 'steelblue'
-                        }else if(time === 212 || time === 215 || time === 217 || time === 218 || time === 219){
-                                return 'green'
-                        }else{
-                                return 'steelblue'
-                        }
+                        // }
                 })
                 .attr("stroke-width", 1)
                 .attr("d", line)
