@@ -1,6 +1,6 @@
 import React from "react";
 import * as d3 from 'd3'
-import ScatterD3 from "./scatter-d3";
+// import ScatterD3 from "./scatter-d3";
 import LineD3 from "./line-d3";
 
 class Scatter extends React.Component{
@@ -62,7 +62,7 @@ class Scatter extends React.Component{
 
     render(){
         return(
-            <div ref={this.scatterId}>{this.props.time}</div>
+            <div ref={this.scatterId}>{`${this.props.folder}_${this.props.time}`}</div>
         )
     }
 }
