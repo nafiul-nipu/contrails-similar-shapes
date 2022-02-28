@@ -1,8 +1,9 @@
 import React from 'react';
 // import * as d3 from 'd3'
+import './container.css'
 
 import Container from 'react-bootstrap/Container'
-import { Col, Row } from 'react-bootstrap';
+import { Col, Row, Form} from 'react-bootstrap';
 
 import GenerateSimilarShapes from '../scatter/generateSimilarShapes';
 
@@ -14,20 +15,18 @@ class ContainerComponent extends React.Component{
         super();
         this.state = {
             value: '210', 
-            dimension: '2d', 
-            folder: 'newData',
-            simulation: [210,211,212,213,214,215,216,217,218,219]
+            similarity: 'shape', 
+            folder: 'newData'
         }
-        this.dataTime = {
-            contrails1: [0.1,0.11,0.12,0.13,0.14,0.15,0.16,0.17,0.18,0.19,0.2],
-            contrails2: [0.1,0.11,0.12,0.13,0.14,0.15,0.16,0.17,0.18,0.19,0.2],
-            contrails3: [0.1,0.11,0.12,0.13,0.14,0.15,0.16,0.17,0.18,0.19,0.2],
-            newData:[210,211,212,213,214,215,216,217,218,219]
-        }
-        // this.simulation = [210,211,212,213,214,215,216,217,218,219]
+        // this.dataTime = {
+        //     contrails1: [0.1,0.11,0.12,0.13,0.14,0.15,0.16,0.17,0.18,0.19,0.2],
+        //     contrails2: [0.1,0.11,0.12,0.13,0.14,0.15,0.16,0.17,0.18,0.19,0.2],
+        //     contrails3: [0.1,0.11,0.12,0.13,0.14,0.15,0.16,0.17,0.18,0.19,0.2],
+        //     newData:[210,211,212,213,214,215,216,217,218,219]
+        // }
+        this.simulation = [210,211,212,213,214,215,216,217,218,219]
         this.handleOnChange = this.handleOnChange.bind(this)
-        this.handleDimensionChange = this.handleDimensionChange.bind(this)
-        this.handleDataOnChange = this.handleDataOnChange.bind(this)
+        this.handleRadioChange = this.handleRadioChange.bind(this)
     }
 
     componentDidMount(){
@@ -45,27 +44,12 @@ class ContainerComponent extends React.Component{
 
     }
 
-    handleDimensionChange(){
-        var val = document.getElementById("dimSelect").value;
-        if(val === '3d'){
-            document.getElementById('selection').selectedIndex  = 0
-            this.setState({dimension: val, folder:'contrails1', simulation: this.dataTime['contrails1'], value: '0.1'})
-
-        }else{
-            document.getElementById('selection').selectedIndex  = 0
-            this.setState({dimension: val, folder: 'newData', simulation: this.dataTime['newData'], value: '210'})
-        }
-        
+    handleRadioChange(event){
+        // console.log(event.target.value)
+        this.setState({similarity: event.target.value})
     }
 
-    handleDataOnChange(){
-        var val = document.getElementById("dataSelect").value;
-        // console.log(this.dataTime[val])
-        document.getElementById('selection').selectedIndex  = 0
-        this.setState({folder: val, simulation: this.dataTime[val], value: '0.1'})
 
-
-    }
 
     render(){
         // console.log(this.state)
@@ -75,30 +59,40 @@ class ContainerComponent extends React.Component{
             return(
                 <Container fluid>
                     <Row xs={12} style={{height: '5vh'}}>
-                    <Col xs={2}>
-                            <select id='dimSelect' onChange={this.handleDimensionChange} defaultValue='2d'>
-                                <option value='3d'>3D</option>
-                                <option value='2d'>2D</option>
-                            </select>
-                        </Col>
-                        <Col xs={2}>
-                            {
-                                this.state.dimension === '2d' 
-                                ? <select id='dataSelect' onChange={this.handleDataOnChange}>
-                                        <option value='newData'>NewData</option>
-                                    </select>
-                                : <select id='dataSelect' onChange={this.handleDataOnChange}>
-                                        <option value='contrails1'>contrails1</option>
-                                        <option value='contrails2'>contrails2</option>
-                                        <option value='contrails3'>contrails3</option>
-                                    </select>
-                            }
+                    <Col xs={4}>
+                    <Form>
+                    <Form.Group >
+                        <Form.Label id='space'>Simiarity based on : </Form.Label>
+                        <Form.Check
+                        inline
+                        label="Shape"
+                        name="TGroup"
+                        type="radio"
+                        id={`inline-radio-3`}
+                        value="shape"
+                        className="radin"
+                        defaultChecked
+                        onChange={this.handleRadioChange}
+                        />
+
+                        <Form.Check
+                        inline
+                        label="I/O"
+                        name="TGroup"
+                        type="radio"
+                        id={`inline-radio-4`}
+                        value="io"
+                        onChange={this.handleRadioChange}
+                        
+                        />
+                    </Form.Group>
+                    </Form>
                         </Col>
                         <Col xs={2}>
                             <select id='selection' onChange={this.handleOnChange}>
                                 {/* <option value='contrails1'>contrails1</option> */}
                                 {
-                                    this.state.simulation.map((el, i) =>{
+                                    this.simulation.map((el, i) =>{
                                         return <option value={`${el}`} key={i}>{el}</option>
                                     })
                                 }
@@ -109,7 +103,7 @@ class ContainerComponent extends React.Component{
                     <GenerateSimilarShapes 
                         value = {this.state.value}
                         folder = {this.state.folder}
-                        dimension = {this.state.dimension}
+                        similarity = {this.state.similarity}
                     />
 
                 </Container>

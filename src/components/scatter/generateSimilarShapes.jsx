@@ -21,10 +21,10 @@ class GenerateSimilarShapes extends React.Component{
 
     render(){
         // console.log(this.props.dimension)
-        if(this.props.dimension === '3d'){
+        if(this.props.similarity === 'io'){
             this.neighbors = neighbors2
             // console.log(this.neighbors)
-        }else if(this.props.dimension === '2d'){
+        }else if(this.props.similarity === 'shape'){
             this.neighbors = neighbors
             // console.log(this.neighbors)
         }
@@ -32,18 +32,18 @@ class GenerateSimilarShapes extends React.Component{
             <>
             <Row xs={12} style={{height: '40vh'}}>
                 {
-                    this.neighbors[`${this.props.folder}_${this.props.value}`].map((el, i) => {
+                    this.neighbors[this.props.value].map((el, i) => {
                         // console.log(el, i)
-                        let ft = el.split('_')
-                        let folder = ft[0]
-                        let time = ft[1]
+                        // let ft = el.split('_')
+                        // let folder = ft[0]
+                        // let time = ft[1]
                         if(i < 3){
                             return(
                                 <Col id='shape' xs={4} style={{height: '40vh'}} key={i}>
                                 <Scatter
                                     key = {`${el}`}
-                                    folder ={folder}     
-                                    time={time}    
+                                    folder ={this.props.folder}     
+                                    time={el}    
                                     id={i}                      
                                 />                            
                                 </Col>
@@ -57,18 +57,15 @@ class GenerateSimilarShapes extends React.Component{
 
                 <Row xs={12} style={{height: '40vh'}}>
                 {
-                    this.neighbors[`${this.props.folder}_${this.props.value}`].map((el, i) => {
+                    this.neighbors[this.props.value].map((el, i) => {
                         // console.log(el, i)
                         if(i > 2){
-                            let ft = el.split('_')
-                            let folder = ft[0]
-                            let time = ft[1]
                             return(
                                 <Col id='shape' xs={4} style={{height: '40vh'}} key={i}>
                                 <Scatter
                                     key = {`${this.props.value}-${el}`}
-                                    folder ={folder}     
-                                    time={time}      
+                                    folder ={this.props.folder}     
+                                    time={el}      
                                     id={i}                    
                                 />                            
                                 </Col>
